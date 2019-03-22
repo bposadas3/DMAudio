@@ -36,3 +36,11 @@ void Play(SamplePlayer sp) {
   sp.setToLoopStart();
   sp.start();
 }
+
+//A special call for the bell, which doesn't change pitch
+void BellPlay(SamplePlayer sp) {
+  //Plays a random pitched value from 1 +- 0.1
+  s_pitchValue.setValue(basePitch);
+  sp.setToLoopStart();
+  sp.start();
+}

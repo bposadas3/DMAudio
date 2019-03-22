@@ -23,7 +23,24 @@ SamplePlayer bludgeon;
 SamplePlayer shwing;
 SamplePlayer whiff;
 SamplePlayer plants;
-
+SamplePlayer water;
+SamplePlayer plop;
+SamplePlayer bell;
+SamplePlayer acid;
+SamplePlayer cold;
+SamplePlayer freeze;
+SamplePlayer firebolt;
+SamplePlayer fireball;
+SamplePlayer force;
+SamplePlayer magicMissile;
+SamplePlayer electricity;
+SamplePlayer necrotic;
+SamplePlayer poison;
+SamplePlayer psychic;
+SamplePlayer radiant;
+SamplePlayer holy;
+SamplePlayer thunder;
+SamplePlayer healing;
 
 
 //************************************************************************
@@ -112,6 +129,24 @@ void setup() {
   shwing = getSamplePlayer("shwing.wav");
   whiff = getSamplePlayer("whoosh.wav");
   plants = getSamplePlayer("plants.wav");
+  water = getSamplePlayer("splash.wav");
+  plop = getSamplePlayer("plop.wav");
+  bell = getSamplePlayer("bell.wav");
+  acid = getSamplePlayer("acid.aiff");
+  cold = getSamplePlayer("howling_wind.wav");
+  freeze = getSamplePlayer("freeze.wav");
+  firebolt = getSamplePlayer("firebolt.wav");
+  fireball = getSamplePlayer("fireball.wav");
+  force = getSamplePlayer("force.wav");
+  magicMissile = getSamplePlayer("magic_missiles.wav");
+  electricity = getSamplePlayer("electricity.wav");
+  necrotic = getSamplePlayer("necrotic.wav");
+  poison = getSamplePlayer("poison.wav");
+  psychic = getSamplePlayer("psychic.wav");
+  radiant = getSamplePlayer("radiant.wav");
+  holy = getSamplePlayer("holy.wav");
+  thunder = getSamplePlayer("thunder.wav");
+  healing = getSamplePlayer("healing.wav");
   
   
   //**************************************************************
@@ -172,6 +207,12 @@ void setup() {
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
+  cp5.addButton("Bell")
+     .setValue(0)
+     .setPosition(270, 50)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;   
   cp5.addButton("Wood")
      .setValue(0)
      .setPosition(150, 80)
@@ -214,6 +255,18 @@ void setup() {
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
+  cp5.addButton("Water")
+     .setValue(0)
+     .setPosition(150, 260)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Plop")
+     .setValue(0)
+     .setPosition(210, 260)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;     
      
 //******************* MAGIC UI *******************************************************************************   MAGIC UI
   cp5.addTextlabel("MagicLabel")
@@ -245,56 +298,74 @@ void setup() {
      .setPosition(magicPosX, magicPosY + 140)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
+     ;     
+  cp5.addButton("Freeze")
+     .setValue(0)
+     .setPosition(magicPosX + 60, magicPosY + 140)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
      ;
-cp5.addButton("Fire")
+  cp5.addButton("Firebolt")
      .setValue(0)
      .setPosition(magicPosX, magicPosY + 170)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
-cp5.addButton("Force")
+  cp5.addButton("Fireball")
+     .setValue(0)
+     .setPosition(magicPosX + 60, magicPosY + 170)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;     
+  cp5.addButton("Force")
      .setValue(0)
      .setPosition(magicPosX, magicPosY + 200)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
-cp5.addButton("Magic_Missiles")
+  cp5.addButton("Magic_Missiles")
      .setValue(0)
      .setPosition(magicPosX + 60, magicPosY + 200)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
-cp5.addButton("Lightning")
+  cp5.addButton("Lightning")
      .setValue(0)
      .setPosition(magicPosX, magicPosY + 230)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
-cp5.addButton("Necrotic")
+  cp5.addButton("Necrotic")
      .setValue(0)
      .setPosition(magicPosX, magicPosY + 260)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
-cp5.addButton("Poison")
+  cp5.addButton("Poison")
      .setValue(0)
      .setPosition(magicPosX, magicPosY + 290)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
-cp5.addButton("Psychic")
+  cp5.addButton("Psychic")
      .setValue(0)
      .setPosition(magicPosX, magicPosY + 320)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
-cp5.addButton("Radiant")
+  cp5.addButton("Radiant")
      .setValue(0)
      .setPosition(magicPosX, magicPosY + 350)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
-cp5.addButton("Thunder")
+  cp5.addButton("Holy")
+     .setValue(0)
+     .setPosition(magicPosX + 60, magicPosY + 350)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Thunder")
      .setValue(0)
      .setPosition(magicPosX, magicPosY + 380)
      .setSize(40,20)
@@ -365,6 +436,10 @@ public void Slide(int theValue) {
   Play(shwing);
 }
 
+public void Bell(int theValue) {
+  BellPlay(bell);
+}
+
 public void Wood(int theValue) {
   Play(wood);
 
@@ -399,6 +474,74 @@ public void Whiff(int theValue) {
 public void Plants(int theValue) {
   
   Play(plants);
+}
+
+public void Water(int theValue) {
+  Play(water);
+}
+
+public void Plop(int theValue) {
+  Play(plop);
+}
+
+public void Acid(int theValue) {
+  Play(acid);
+}
+
+public void Cold(int theValue) {
+  Play(cold);
+}
+
+public void Freeze(int theValue) {
+  Play(freeze);
+}
+
+public void Firebolt(int theValue) {
+  Play(firebolt);
+}
+
+public void Fireball(int theValue) {
+  Play(fireball);
+}
+
+public void Force(int theValue) {
+  Play(force);
+}
+
+public void Magic_Missiles(int theValue) {
+  Play(magicMissile);
+}
+
+public void Lightning(int theValue) {
+  Play(electricity);
+}
+
+public void Necrotic(int theValue) {
+  Play(necrotic);
+}
+
+public void Poison(int theValue) {
+  Play(poison);
+}
+
+public void Psychic(int theValue) {
+  Play(psychic);
+}
+
+public void Radiant(int theValue) {
+  Play(radiant);
+}
+
+public void Holy(int theValue) {
+  Play(holy);
+}
+
+public void Thunder(int theValue) {
+  Play(thunder);
+}
+
+public void Healing(int theValue) {
+  Play(healing);
 }
 
 public void Pitch(int theValue) {
