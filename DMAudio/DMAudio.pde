@@ -41,7 +41,9 @@ SamplePlayer radiant;
 SamplePlayer holy;
 SamplePlayer thunder;
 SamplePlayer healing;
-
+SamplePlayer cast;
+SamplePlayer conjure;
+SamplePlayer abjure;
 
 //************************************************************************
 //******************************************************************************************************************************** Declare Sound Effects
@@ -74,14 +76,29 @@ Gain s_gain;
 //Declare other globals variables
 float gainSlideValue = 1.0;
 float magicPosX = 150;
-float magicPosY = 300;
+float magicPosY = 350;
+
+float colPosX = 150;
+float colPosY = 10;
+
+float itemPosX = 400;
+float itemPosY = 10;
+
+float monPosX = 400;
+float monPosY = 350;
+
+float doorsPosX = 650;
+float doorsPosY = 10;
+
+float destPosX = 650;
+float destPosY = 350;
 
 //end global variables
 
 //runs once when the Play button above is pressed
 
 void setup() {
-  size(800, 800); //size(width, height) must be the first line in setup()
+  size(1000, 800); //size(width, height) must be the first line in setup()
   ac = new AudioContext(); //AudioContext ac; is declared in helper_functions 
   noStroke();
   cp5 = new ControlP5(this);
@@ -147,7 +164,9 @@ void setup() {
   holy = getSamplePlayer("holy.wav");
   thunder = getSamplePlayer("thunder.wav");
   healing = getSamplePlayer("healing.wav");
-  
+  cast = getSamplePlayer("cast.wav");
+  conjure = getSamplePlayer("conjure.mp3");
+  abjure = getSamplePlayer("abjure.wav");
   
   //**************************************************************
   
@@ -184,7 +203,7 @@ void setup() {
 //************ COLLISIONS UI ******************************************************************************************* COLLISIONS UI
   cp5.addTextlabel("CollisionLabel")
       .setText("Collisions")
-      .setPosition(150,10)
+      .setPosition(colPosX,colPosY)
       .setColorValue(0xffffff00)
       .setFont(createFont("Georgia",20))
       ;
@@ -197,73 +216,73 @@ void setup() {
   
   cp5.addButton("Metal")
      .setValue(0)
-     .setPosition(150, 50)
+     .setPosition(colPosX, colPosY + 40)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
   cp5.addButton("Slide")
      .setValue(0)
-     .setPosition(210, 50)
+     .setPosition(colPosX + 60, colPosY + 40)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
   cp5.addButton("Bell")
      .setValue(0)
-     .setPosition(270, 50)
+     .setPosition(colPosX + 120, colPosY + 40)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;   
   cp5.addButton("Wood")
      .setValue(0)
-     .setPosition(150, 80)
+     .setPosition(colPosX, colPosY + 70)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
   cp5.addButton("Hollow")
      .setValue(0)
-     .setPosition(210, 80)
+     .setPosition(colPosX + 60, colPosY + 70)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;   
   cp5.addButton("Rock")
      .setValue(0)
-     .setPosition(150, 110)
+     .setPosition(colPosX, colPosY + 100)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
   cp5.addButton("Slash")
      .setValue(0)
-     .setPosition(150, 140)
+     .setPosition(colPosX, colPosY + 130)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
   cp5.addButton("Bludgeon")
      .setValue(0)
-     .setPosition(150, 170)
+     .setPosition(colPosX, colPosY + 160)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
    cp5.addButton("Whiff")
      .setValue(0)
-     .setPosition(150, 200)
+     .setPosition(colPosX, colPosY + 190)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
   cp5.addButton("Plants")
      .setValue(0)
-     .setPosition(150, 230)
+     .setPosition(colPosX, colPosY + 220)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
   cp5.addButton("Water")
      .setValue(0)
-     .setPosition(150, 260)
+     .setPosition(colPosX, colPosY + 250)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
   cp5.addButton("Plop")
      .setValue(0)
-     .setPosition(210, 260)
+     .setPosition(colPosX + 60, colPosY + 250)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;     
@@ -281,9 +300,21 @@ void setup() {
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
+    cp5.addButton("Conjure")
+     .setValue(0)
+     .setPosition(magicPosX, magicPosY + 70)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
   cp5.addButton("Healing")
      .setValue(0)
      .setPosition(magicPosX + 60, magicPosY + 40)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Abjure")
+     .setValue(0)
+     .setPosition(magicPosX + 60, magicPosY + 70)
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
@@ -323,7 +354,7 @@ void setup() {
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
-  cp5.addButton("Magic_Missiles")
+  cp5.addButton("MagicMissiles")
      .setValue(0)
      .setPosition(magicPosX + 60, magicPosY + 200)
      .setSize(40,20)
@@ -371,6 +402,35 @@ void setup() {
      .setSize(40,20)
      .activateBy(ControlP5.PRESS)
      ;
+//********************Items UI******************************************************************************** ITEMS UI
+
+  cp5.addTextlabel("ItemsLabel")
+      .setText("Items")
+      .setPosition(itemPosX, itemPosY)
+      .setColorValue(0xffffff00)
+      .setFont(createFont("Georgia",20))
+      ;
+//********************Monsters UI***************************************************************************** MONSTERS UI
+  cp5.addTextlabel("MonstersLabel")
+      .setText("Monsters")
+      .setPosition(monPosX, monPosY)
+      .setColorValue(0xffffff00)
+      .setFont(createFont("Georgia",20))
+      ;
+//********************Doors UI******************************************************************************** DOORS UI
+  cp5.addTextlabel("DoorsLabel")
+      .setText("Doors")
+      .setPosition(doorsPosX, doorsPosY)
+      .setColorValue(0xffffff00)
+      .setFont(createFont("Georgia",20))
+      ;
+//********************Destruction UI************************************************************************** DESTRUCTION UI
+  cp5.addTextlabel("DestructionLabel")
+      .setText("Destruction")
+      .setPosition(destPosX, destPosY)
+      .setColorValue(0xffffff00)
+      .setFont(createFont("Georgia",20))
+      ;
 //******************* Effects UI ***************************************************************************** EFFECTS UI
   cp5.addButton("Stop")
      .setValue(0)
@@ -397,23 +457,53 @@ void setup() {
 void draw() {
   background(0);  //fills the canvas with black (0) each frame
   
+  if (checkbox.getState(0)) {
+    s_reverb.setSize(0.5f);
+  } else {
+    s_reverb.setSize(0.0f);
+  }
+  
+  //If "Muffle" is checked"
+  if (checkbox.getState(1)) {
+    s_filterFreq.setValue(500f);
+  } else {
+    s_filterFreq.setValue(100000f);
+  }
+  
+  if (pitchRadioButton.getState(0)) {basePitch = 1.9f;}
+  if (pitchRadioButton.getState(1)) {basePitch = 1f;}
+  if (pitchRadioButton.getState(2)) {basePitch = 0.4f;}
+  
 }
 
 
 void keyPressed() {
   if (key == '1') {
     pitchRadioButton.activate(2);
-    Pitch(3);
   }
   
   if (key == '2') {
     pitchRadioButton.activate(1);
-    Pitch(2);
   }
   
   if (key == '3') {
     pitchRadioButton.activate(0);
-    Pitch(1);
+  }
+  
+  if (key == 'e') {
+    if (!checkbox.getState(0)) {
+      checkbox.activate(0);
+    } else {
+      checkbox.deactivate(0);
+    }
+  }
+  
+  if (key == 'm') {
+    if (!checkbox.getState(1)) {
+      checkbox.activate(1);
+    } else {
+      checkbox.deactivate(1);
+    }
   }
   
 }
@@ -508,7 +598,7 @@ public void Force(int theValue) {
   Play(force);
 }
 
-public void Magic_Missiles(int theValue) {
+public void MagicMissiles(int theValue) {
   Play(magicMissile);
 }
 
@@ -533,7 +623,7 @@ public void Radiant(int theValue) {
 }
 
 public void Holy(int theValue) {
-  Play(holy);
+  BellPlay(holy);
 }
 
 public void Thunder(int theValue) {
@@ -544,26 +634,16 @@ public void Healing(int theValue) {
   Play(healing);
 }
 
-public void Pitch(int theValue) {
-  if (theValue == 1) {basePitch = 1.9f;}
-  if (theValue == 2) {basePitch = 1f;}
-  if (theValue == 3) {basePitch = 0.4f;}
+public void Cast(int theValue) {
+  Play(cast);
 }
 
-public void ambientCheckbox(float[] values) {
-  //If "Echo" is checked
-  if (values[0] > 0) {
-    s_reverb.setSize(0.5f);
-  } else {
-    s_reverb.setSize(0.0f);
-  }
-  
-  //If "Muffle" is checked"
-  if (values[1] > 0) {
-    s_filterFreq.setValue(500f);
-  } else {
-    s_filterFreq.setValue(100000f);
-  }
+public void Conjure(int theValue) {
+  Play(conjure);  
+}
+
+public void Abjure(int theValue) {
+  Play(abjure);
 }
 
 //Declare this method last. Stops all ambience/sound effects
