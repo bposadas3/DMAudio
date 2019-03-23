@@ -44,6 +44,42 @@ SamplePlayer healing;
 SamplePlayer cast;
 SamplePlayer conjure;
 SamplePlayer abjure;
+SamplePlayer drink;
+SamplePlayer eat;
+SamplePlayer armor;
+SamplePlayer blunt;
+SamplePlayer book;
+SamplePlayer bottle;
+SamplePlayer clothes;
+SamplePlayer coins;
+SamplePlayer paper;
+SamplePlayer sharp;
+SamplePlayer open;
+SamplePlayer close;
+SamplePlayer locked;
+SamplePlayer unlock;
+SamplePlayer creak;
+SamplePlayer ironGate;
+SamplePlayer stoneDoor;
+SamplePlayer woodbreak;
+SamplePlayer clatter;
+SamplePlayer rip;
+SamplePlayer rockslide;
+SamplePlayer glass;
+SamplePlayer rockbreak;
+SamplePlayer drawbridge;
+SamplePlayer roar;
+SamplePlayer growl;
+SamplePlayer screech;
+SamplePlayer undead;
+SamplePlayer zombie;
+SamplePlayer ghost;
+SamplePlayer fairy;
+SamplePlayer tinkle;
+SamplePlayer ooze;
+SamplePlayer splat;
+SamplePlayer demonLaugh;
+SamplePlayer scream;
 
 //************************************************************************
 //******************************************************************************************************************************** Declare Sound Effects
@@ -167,6 +203,42 @@ void setup() {
   cast = getSamplePlayer("cast.wav");
   conjure = getSamplePlayer("conjure.mp3");
   abjure = getSamplePlayer("abjure.wav");
+  drink = getSamplePlayer("drink.wav");
+  eat = getSamplePlayer("eat.wav");
+  armor = getSamplePlayer("armor.wav");
+  blunt = getSamplePlayer("blunt.aiff");
+  book = getSamplePlayer("book.mp3");
+  bottle = getSamplePlayer("bottle.wav");
+  clothes = getSamplePlayer("clothes.wav");
+  coins = getSamplePlayer("coins.wav");
+  paper = getSamplePlayer("paper.wav");
+  sharp = getSamplePlayer("sharp.wav");
+  open = getSamplePlayer("openDoor.wav");
+  close = getSamplePlayer("closeDoor.wav");
+  locked = getSamplePlayer("locked.wav");
+  unlock = getSamplePlayer("unlock.wav");
+  creak = getSamplePlayer("creak.wav");
+  ironGate = getSamplePlayer("gate.wav");
+  stoneDoor = getSamplePlayer("stoneDoor.wav");
+  clatter = getSamplePlayer("clatter.wav");
+  glass = getSamplePlayer("glassBreak.wav");
+  rip = getSamplePlayer("rip.aiff");
+  rockslide = getSamplePlayer("rockslide.wav");
+  woodbreak = getSamplePlayer("woodbreak.wav");
+  rockbreak = getSamplePlayer("rockbreak.wav");
+  drawbridge = getSamplePlayer("drawbridge.wav");
+  roar = getSamplePlayer("roar.wav");
+  growl = getSamplePlayer("growl.wav");
+  screech = getSamplePlayer("screech.wav");
+  undead = getSamplePlayer("undead.wav");
+  zombie = getSamplePlayer("zombie.wav");
+  ghost = getSamplePlayer("ghost.wav");
+  fairy = getSamplePlayer("giggle.wav");
+  tinkle = getSamplePlayer("tinkle.wav");
+  ooze = getSamplePlayer("gurgle.wav");
+  splat = getSamplePlayer("splat.wav");
+  demonLaugh = getSamplePlayer("demonlaugh.mp3");
+  scream = getSamplePlayer("scream.wav");
   
   //**************************************************************
   
@@ -175,6 +247,7 @@ void setup() {
   //Set up Sound input
   s_gain.addInput(s_reverb);
   s_filter.addInput(s_gain);
+  s_filter.addInput(a_gain);
   
   masterGain.addInput(s_filter);
   ac.out.addInput(masterGain);
@@ -410,6 +483,67 @@ void setup() {
       .setColorValue(0xffffff00)
       .setFont(createFont("Georgia",20))
       ;
+  cp5.addButton("Drink")
+     .setValue(0)
+     .setPosition(itemPosX, itemPosY + 40)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Eat")
+     .setValue(0)
+     .setPosition(itemPosX + 60, itemPosY + 40)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;     
+  cp5.addButton("Armor")
+     .setValue(0)
+     .setPosition(itemPosX, itemPosY + 80)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Clothes")
+     .setValue(0)
+     .setPosition(itemPosX + 60, itemPosY + 80)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Blunt")
+     .setValue(0)
+     .setPosition(itemPosX, itemPosY + 110)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Sharp")
+     .setValue(0)
+     .setPosition(itemPosX + 60, itemPosY + 110)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Book")
+     .setValue(0)
+     .setPosition(itemPosX, itemPosY + 140)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Bottle")
+     .setValue(0)
+     .setPosition(itemPosX, itemPosY + 170)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Coins")
+     .setValue(0)
+     .setPosition(itemPosX, itemPosY + 200)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Paper")
+     .setValue(0)
+     .setPosition(itemPosX, itemPosY + 230)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+     
 //********************Monsters UI***************************************************************************** MONSTERS UI
   cp5.addTextlabel("MonstersLabel")
       .setText("Monsters")
@@ -417,6 +551,78 @@ void setup() {
       .setColorValue(0xffffff00)
       .setFont(createFont("Georgia",20))
       ;
+  cp5.addButton("Roar")
+     .setValue(0)
+     .setPosition(monPosX, monPosY + 40)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Growl")
+     .setValue(0)
+     .setPosition(monPosX + 60, monPosY + 40)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Screech")
+     .setValue(0)
+     .setPosition(monPosX + 120, monPosY + 40)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Undead")
+     .setValue(0)
+     .setPosition(monPosX, monPosY + 70)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Zombie")
+     .setValue(0)
+     .setPosition(monPosX + 60, monPosY + 70)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Ghost")
+     .setValue(0)
+     .setPosition(monPosX + 120, monPosY + 70)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Fairy")
+     .setValue(0)
+     .setPosition(monPosX, monPosY + 100)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Tinkle")
+     .setValue(0)
+     .setPosition(monPosX + 60, monPosY + 100)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Ooze")
+     .setValue(0)
+     .setPosition(monPosX, monPosY + 130)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Splat")
+     .setValue(0)
+     .setPosition(monPosX + 60, monPosY + 130)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Demonlaugh")
+     .setValue(0)
+     .setPosition(monPosX, monPosY + 160)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Demonscream")
+     .setValue(0)
+     .setPosition(monPosX + 60, monPosY + 160)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
 //********************Doors UI******************************************************************************** DOORS UI
   cp5.addTextlabel("DoorsLabel")
       .setText("Doors")
@@ -424,6 +630,55 @@ void setup() {
       .setColorValue(0xffffff00)
       .setFont(createFont("Georgia",20))
       ;
+  cp5.addButton("Open")
+     .setValue(0)
+     .setPosition(doorsPosX, doorsPosY + 40)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Close")
+     .setValue(0)
+     .setPosition(doorsPosX + 60, doorsPosY + 40)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Locked")
+     .setValue(0)
+     .setPosition(doorsPosX, doorsPosY + 70)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Unlock")
+     .setValue(0)
+     .setPosition(doorsPosX + 60, doorsPosY + 70)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Creak")
+     .setValue(0)
+     .setPosition(doorsPosX, doorsPosY + 110)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Drawbridge")
+     .setValue(0)
+     .setPosition(doorsPosX, doorsPosY + 140)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Iron_Gate")
+     .setValue(0)
+     .setPosition(doorsPosX, doorsPosY + 170)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Stone_Door")
+     .setValue(0)
+     .setPosition(doorsPosX, doorsPosY + 200)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+
 //********************Destruction UI************************************************************************** DESTRUCTION UI
   cp5.addTextlabel("DestructionLabel")
       .setText("Destruction")
@@ -431,6 +686,42 @@ void setup() {
       .setColorValue(0xffffff00)
       .setFont(createFont("Georgia",20))
       ;
+  cp5.addButton("Glass")
+     .setValue(0)
+     .setPosition(destPosX, destPosY + 40)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Metal_Clatter")
+     .setValue(0)
+     .setPosition(destPosX, destPosY + 70)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Paper_Rip")
+     .setValue(0)
+     .setPosition(destPosX, destPosY + 100)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Rockbreak")
+     .setValue(0)
+     .setPosition(destPosX, destPosY + 130)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Rockslide")
+     .setValue(0)
+     .setPosition(destPosX, destPosY + 160)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
+  cp5.addButton("Wood_Break")
+     .setValue(0)
+     .setPosition(destPosX, destPosY + 190)
+     .setSize(40,20)
+     .activateBy(ControlP5.PRESS)
+     ;
 //******************* Effects UI ***************************************************************************** EFFECTS UI
   cp5.addButton("Stop")
      .setValue(0)
@@ -644,6 +935,150 @@ public void Conjure(int theValue) {
 
 public void Abjure(int theValue) {
   Play(abjure);
+}
+
+public void Drink(int theValue) {
+  Play(drink);
+}
+
+public void Eat(int theValue) {
+  Play(eat);
+}
+
+public void Armor(int theValue) {
+  Play(armor);
+}
+
+public void Blunt(int theValue) {
+  Play(blunt);
+}
+
+public void Book(int theValue) {
+  Play(book);
+}
+
+public void Bottle(int theValue) {
+  Play(bottle);
+}
+
+public void Clothes(int theValue) {
+  Play(clothes);
+}
+
+public void Coins(int theValue) {
+  Play(coins);
+}
+
+public void Paper(int theValue) {
+  Play(paper);
+}
+
+public void Sharp(int theValue) {
+  Play(sharp);
+}
+
+public void Open(int theValue) {
+  Play(open);
+}
+
+public void Close(int theValue) {
+  Play(close);
+}
+
+public void Locked(int theValue) {
+  Play(locked);
+}
+
+public void Unlock(int theValue) {
+  Play(unlock);
+}
+
+public void Creak(int theValue) {
+  Play(creak);
+}
+
+public void Iron_Gate(int theValue) {
+  Play(ironGate);
+}
+
+public void Stone_Door(int theValue) {
+  Play(stoneDoor);
+}
+
+public void Glass(int theValue) {
+  Play(glass);
+}
+
+public void Metal_Clatter(int theValue) {
+  Play(clatter);
+}
+
+public void Paper_Rip(int theValue) {
+  Play(rip);
+}
+
+public void Rockslide(int theValue) {
+  Play(rockslide);
+}
+
+public void Wood_Break(int theValue) {
+  Play(woodbreak);
+}
+
+public void Rockbreak(int theValue) {
+  Play(rockbreak);
+}
+
+public void Drawbridge(int theValue) {
+  Play(drawbridge);
+}
+
+public void Roar(int theValue) {
+  Play(roar);
+}
+
+public void Growl(int theValue) {
+  Play(growl);
+}
+
+public void Screech(int theValue) {
+  Play(screech);
+}
+
+public void Undead(int theValue) {
+  Play(undead);
+}
+
+public void Zombie(int theValue) {
+  Play(zombie);
+}
+
+public void Ghost(int theValue) {
+  Play(ghost);
+}
+
+public void Fairy(int theValue) {
+  Play(fairy);
+}
+
+public void Tinkle(int theValue) {
+  Play(tinkle);
+}
+
+public void Ooze(int theValue) {
+  Play(ooze);
+}
+
+public void Splat(int theValue) {
+  Play(splat);
+}
+
+public void Demonlaugh(int theValue) {
+  Play(demonLaugh);
+}
+
+public void Demonscream(int theValue) {
+  Play(scream);
 }
 
 //Declare this method last. Stops all ambience/sound effects
