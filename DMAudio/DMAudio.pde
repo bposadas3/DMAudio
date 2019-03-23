@@ -5,7 +5,8 @@ import java.util.Random;
 //AudioContext ac; is declared in helper_functions
 
 ControlP5 cp5;
-CheckBox checkbox;
+CheckBox e_checkbox;
+CheckBox a_checkbox;
 RadioButton pitchRadioButton;
 
 SamplePlayer soundEffect;
@@ -81,6 +82,23 @@ SamplePlayer splat;
 SamplePlayer demonLaugh;
 SamplePlayer scream;
 
+
+//Ambient Samples
+SamplePlayer underwater;
+SamplePlayer birds;
+SamplePlayer crickets;
+SamplePlayer campfire;
+SamplePlayer cave;
+SamplePlayer market;
+SamplePlayer tavern;
+SamplePlayer ship;
+SamplePlayer waves;
+SamplePlayer gulls;
+SamplePlayer carriage;
+SamplePlayer wind;
+SamplePlayer thunderstorm;
+SamplePlayer rain;
+
 //************************************************************************
 //******************************************************************************************************************************** Declare Sound Effects
 //************************************************************************
@@ -111,22 +129,22 @@ Gain s_gain;
 
 //Declare other globals variables
 float gainSlideValue = 1.0;
-float magicPosX = 150;
+float magicPosX = 250;
 float magicPosY = 350;
 
-float colPosX = 150;
+float colPosX = 250;
 float colPosY = 10;
 
-float itemPosX = 400;
+float itemPosX = 500;
 float itemPosY = 10;
 
-float monPosX = 400;
+float monPosX = 500;
 float monPosY = 350;
 
-float doorsPosX = 650;
+float doorsPosX = 750;
 float doorsPosY = 10;
 
-float destPosX = 650;
+float destPosX = 750;
 float destPosY = 350;
 
 //end global variables
@@ -134,7 +152,7 @@ float destPosY = 350;
 //runs once when the Play button above is pressed
 
 void setup() {
-  size(1000, 800); //size(width, height) must be the first line in setup()
+  size(1000, 1000); //size(width, height) must be the first line in setup()
   ac = new AudioContext(); //AudioContext ac; is declared in helper_functions 
   noStroke();
   cp5 = new ControlP5(this);
@@ -240,6 +258,22 @@ void setup() {
   demonLaugh = getSamplePlayer("demonlaugh.mp3");
   scream = getSamplePlayer("scream.wav");
   
+  //Ambience
+  underwater = getAmbience("underwater.wav");
+  birds = getAmbience("birds.wav");
+  crickets = getAmbience("crickets.wav");
+  campfire = getAmbience("campfire.wav");
+  cave = getAmbience("cave.wav");
+  market = getAmbience("market.wav");
+  tavern = getAmbience("tavern.wav");
+  ship = getAmbience("ship.wav");
+  waves = getAmbience("waves.wav");
+  gulls = getAmbience("gulls.wav");
+  carriage = getAmbience("carriage.wav");
+  wind = getAmbience("wind.wav");
+  thunderstorm = getAmbience("thunderstorm.mp3");
+  rain = getAmbience("rain.wav");
+  
   //**************************************************************
   
   //Set up UGen input flow
@@ -247,31 +281,69 @@ void setup() {
   //Set up Sound input
   s_gain.addInput(s_reverb);
   s_filter.addInput(s_gain);
-  s_filter.addInput(a_gain);
   
   masterGain.addInput(s_filter);
+  masterGain.addInput(a_gain);
   ac.out.addInput(masterGain);
   
   
-  //*******************************************************************************************************************  AMBIENCE UI
-  cp5.addTextlabel("AmbienceLabel")
-      .setText("Ambience")
+  //*******************************************************************************************************************  EFFECTORS UI
+  cp5.addTextlabel("EffectorsLabel")
+      .setText("Effectors")
       .setPosition(10,300)
       .setColorValue(0xffffff00)
       .setFont(createFont("Georgia",20))
       ;
-  checkbox = cp5.addCheckBox("ambientCheckbox")
+  e_checkbox = cp5.addCheckBox("effectorse_checkbox")
       .setPosition(10, 340)
       .setColorForeground(color(120))
       .setColorActive(color(255))
       .setColorLabel(color(255))
-      .setSize(40, 40)
+      .setSize(20, 20)
       .setItemsPerRow(1)
-      .setSpacingColumn(30)
-      .setSpacingRow(20)
+      .setSpacingColumn(10)
+      .setSpacingRow(10)
       .addItem("Echo", 0)
       .addItem("Muffle", 1);
       ;
+      
+//  //*******************************************************************************************************************  AMBIENCE UI
+  cp5.addTextlabel("AmbienceLabel")
+      .setText("Ambience")
+      .setPosition(10,500)
+      .setColorValue(0xffffff00)
+      .setFont(createFont("Georgia",20))
+      ;
+  a_checkbox = cp5.addCheckBox("ambiencee_checkbox")
+      .setPosition(10, 540)
+      .setColorForeground(color(120))
+      .setColorActive(color(255))
+      .setColorLabel(color(255))
+      .setSize(20, 20)
+      .setItemsPerRow(1)
+      .setSpacingColumn(10)
+      .setSpacingRow(10)
+      .addItem("Birds", 0)
+      .addItem("Campfire", 1)
+      .addItem("Carriage", 2)
+      .addItem("Cave", 3)
+      .addItem("Crickets",4)
+      .addItem("Gulls",5)
+      .addItem("Market",6)
+      .addItem("Rain",7)
+      .addItem("Ship",8)
+      .addItem("Tavern",9)
+      .addItem("Thunderstorm",10)
+      .addItem("Underwater",11)
+      .addItem("Waves",12)
+      .addItem("Wind",13);
+      ;
+  cp5.addSlider("AVolume")
+     .setPosition(100,540)
+     .setSize(20,100)
+     .setRange(0,100)
+     .setValue(100)
+     ;
       
 //************ COLLISIONS UI ******************************************************************************************* COLLISIONS UI
   cp5.addTextlabel("CollisionLabel")
@@ -748,14 +820,14 @@ void setup() {
 void draw() {
   background(0);  //fills the canvas with black (0) each frame
   
-  if (checkbox.getState(0)) {
+  if (e_checkbox.getState(0)) {
     s_reverb.setSize(0.5f);
   } else {
     s_reverb.setSize(0.0f);
   }
   
   //If "Muffle" is checked"
-  if (checkbox.getState(1)) {
+  if (e_checkbox.getState(1)) {
     s_filterFreq.setValue(500f);
   } else {
     s_filterFreq.setValue(100000f);
@@ -764,6 +836,92 @@ void draw() {
   if (pitchRadioButton.getState(0)) {basePitch = 1.9f;}
   if (pitchRadioButton.getState(1)) {basePitch = 1f;}
   if (pitchRadioButton.getState(2)) {basePitch = 0.4f;}
+  
+  //Ambiences
+  
+  if (a_checkbox.getState("Underwater")) {
+    AmbiencePlay(underwater);
+  } else {
+    AmbienceStop(underwater);
+  }
+  
+  if (a_checkbox.getState("Birds")) {
+    AmbiencePlay(birds);
+  } else {
+    AmbienceStop(birds);
+  }
+  
+  if (a_checkbox.getState("Crickets")) {
+    AmbiencePlay(crickets);
+  } else {
+    AmbienceStop(crickets);
+  }
+  
+  if (a_checkbox.getState("Campfire")) {
+    AmbiencePlay(campfire);
+  } else {
+    AmbienceStop(campfire);
+  }
+  
+  if (a_checkbox.getState("Cave")) {
+    AmbiencePlay(cave);
+  } else {
+    AmbienceStop(cave);
+  }
+  
+  if (a_checkbox.getState("Market")) {
+    AmbiencePlay(market);
+  } else {
+    AmbienceStop(market);
+  }
+  
+  if (a_checkbox.getState("Tavern")) {
+    AmbiencePlay(tavern);
+  } else {
+    AmbienceStop(tavern);
+  }
+  
+  if (a_checkbox.getState("Ship")) {
+    AmbiencePlay(ship);
+  } else {
+    AmbienceStop(ship);
+  }
+  
+  if (a_checkbox.getState("Waves")) {
+    AmbiencePlay(waves);
+  } else {
+    AmbienceStop(waves);
+  }
+  
+  if (a_checkbox.getState("Gulls")) {
+    AmbiencePlay(gulls);
+  } else {
+    AmbienceStop(gulls);
+  }
+  
+  if (a_checkbox.getState("Carriage")) {
+    AmbiencePlay(carriage);
+  } else {
+    AmbienceStop(carriage);
+  }
+  
+  if (a_checkbox.getState("Rain")) {
+    AmbiencePlay(rain);
+  } else {
+    AmbienceStop(rain);
+  }
+
+  if (a_checkbox.getState("Thunderstorm")) {
+    AmbiencePlay(thunderstorm);
+  } else {
+    AmbienceStop(thunderstorm);
+  }
+  
+  if (a_checkbox.getState("Wind")) {
+    AmbiencePlay(wind);
+  } else {
+    AmbienceStop(wind);
+  }
   
 }
 
@@ -782,18 +940,18 @@ void keyPressed() {
   }
   
   if (key == 'e') {
-    if (!checkbox.getState(0)) {
-      checkbox.activate(0);
+    if (!e_checkbox.getState(0)) {
+      e_checkbox.activate(0);
     } else {
-      checkbox.deactivate(0);
+      e_checkbox.deactivate(0);
     }
   }
   
   if (key == 'm') {
-    if (!checkbox.getState(1)) {
-      checkbox.activate(1);
+    if (!e_checkbox.getState(1)) {
+      e_checkbox.activate(1);
     } else {
-      checkbox.deactivate(1);
+      e_checkbox.deactivate(1);
     }
   }
   
@@ -1084,4 +1242,8 @@ public void Demonscream(int theValue) {
 //Declare this method last. Stops all ambience/sound effects
 public void Stop(int theValue) {
   //s_gainValue.setValue(0);
+}
+
+public void AVolume(int theValue) {
+  a_gainValue.setValue(theValue/100f);
 }
